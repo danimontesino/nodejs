@@ -154,6 +154,9 @@ dist
 #.idea
 .idea
 
+#output
+output/*.txt
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml

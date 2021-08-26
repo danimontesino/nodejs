@@ -1,0 +1,16 @@
+{
+  "name": "03-bases-node",
+  "version": "0.0.1",
+  "description": "It is a simple multiplication table and text files",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Montesino",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^17.1.1"
+  },
+  "devDependencies": {}
+}
