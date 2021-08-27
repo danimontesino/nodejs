@@ -1,10 +1,12 @@
 require("colors");
 const {inquirerMenu, pause, readInput} = require("./helpers/inquirer");
 const Tasks = require("./models/tasks");
+const {save, read} = require("./helpers/bdd");
 
 const main = async () => {
     let opt = '';
     const tasks = new Tasks();
+    tasks.load(read()); // load task from file
 
     do {
         opt = await inquirerMenu();
@@ -13,11 +15,11 @@ const main = async () => {
             case '1':
                 // create
                 const desc = await readInput("Description:");
-                tasks.createTask(desc);
+                tasks.create(desc);
                 break;
             case '2':
                 // list all
-                console.log(tasks.list);
+                tasks.printList();
                 break;
             case '3':
                 // list completed tasks
@@ -30,6 +32,10 @@ const main = async () => {
                 break;
             case '6':
                 // Delete
+                break;
+            case '0':
+                // Save tasks on File before Exit
+                save(tasks.list);
                 break;
         }
 

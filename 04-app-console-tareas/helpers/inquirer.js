@@ -27,7 +27,7 @@ const readInput = async (message) => {
     const question = [
         {
             type: "input",
-            name: "task",
+            name: "desc",
             message,
             validate( value ){
                 if (value.length === 0){
