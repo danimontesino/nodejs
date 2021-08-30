@@ -43,9 +43,62 @@ const readInput = async (message) => {
     return desc;
 }
 
+const inquirerCheckbox = async (tasks = []) => {
+    if(tasks.length < 1)
+        return null;
+
+    const options = [
+        {
+            type: "checkbox",
+            name: "selectedOptions",
+            message: "Select at least one",
+            choices: tasks.map(task => {
+                const {desc,completedDate} = task;
+                let textCompleted = '';
+
+                if (completedDate === null){
+                    textCompleted = "Pending ❓".red;
+                }
+                else{
+                    textCompleted = "Completed ✅".green;
+                }
+                return {value: task.id, name: `${desc} :: ${textCompleted}`};
+            }),
+            validate( answer ){
+                if (answer.length < 1){
+                    return 'You must choose at least one topping.';
+                }
+
+                return true;
+            }
+        }
+    ];
+
+    const {selectedOptions} = await inquirer.prompt(options);
+
+    return selectedOptions;
+}
+
+const inquirerConfirm = async (message) => {
+    const question = [
+        {
+            type: "confirm",
+            name: "valueConfirm",
+            message,
+            default: true
+        }
+    ];
+
+    const {valueConfirm} = await inquirer.prompt(question);
+
+    return valueConfirm;
+}
+
 
 module.exports = {
     inquirerMenu,
     pause,
-    readInput
+    readInput,
+    inquirerCheckbox,
+    inquirerConfirm
 }

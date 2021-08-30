@@ -17,6 +17,14 @@ class Tasks{
         return listResponse;
     }
 
+    get listCompleted() {
+        return Object.keys(this._list).filter( key => this._list[key].completedDate !== null );
+    }
+
+    get listPending() {
+        return Object.keys(this._list).filter( key => this._list[key].completedDate === null );
+    }
+
     create(desc= ''){
         const task = new Task(desc);
         this._list[task.id] = task;
@@ -26,25 +34,61 @@ class Tasks{
         tasks.forEach( task => this._list[task.id] = task);
     }
 
-    printList(){
+    delete(id = ''){
+        if (this._list[id]){
+            delete this._list[id];
+        }
+    }
+
+    update(task = {}) {
+        if (this._list[task.id]){
+            this._list[task.id] = task;
+        }
+    }
+
+    /**
+     * @param list of tasks
+     * @return void print task list in console
+     */
+    print(list = []){
         // 1. Name :: Completed ✅ | Pending ❓
+        console.log(); // Line break
+        if (!list.length){
+            // is empty
+            console.log("You don't have any tasks yet".underline);
+        }
+        else{
+            list.map((task, index) => {
+                const {desc,completedDate} = task;
+                let textCompleted = '';
+                const textIndex = (index + 1).toString();
 
-        this.list.map((task, index) => {
-            const {desc,completedDate} = task;
-            let textCompleted = '';
-            let textId = '';
+                if (completedDate === null){
+                    textCompleted = "Pending ❓".red;
+                }
+                else{
+                    textCompleted = "Completed ✅".green;
+                }
 
-            if (completedDate === null){
-                textCompleted = "Pending ❓";
-                textId = `${index.toString()}.`.red;
-            }
-            else{
-                textCompleted = "Completed ✅";
-                textId = `${index.toString()}.`.green;
-            }
+                console.log(`${textIndex.brightBlue} ${desc} :: ${textCompleted}`);
+            })
+        }
+        console.log(); // Line break
+    }
 
-            console.log(`${textId} ${desc} :: ${textCompleted}`);
-        })
+    /**
+     * @param cp boolean true = completed | false = pending
+     * @return array
+     */
+    listCompletedOrPending(cp = true){
+        if(cp){
+            // Completed
+            return this.list.filter(task => task.completedDate !== null);
+        }
+        else{
+            // Pending
+            return this.list.filter(task => task.completedDate === null);
+        }
     }
 }
 

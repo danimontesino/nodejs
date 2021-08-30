@@ -30,7 +30,7 @@ const questions = [
             },
             {
                 value: '0',
-                name: `${"0.".brightBlue} Exit`
+                name: `${"7.".brightBlue} Exit`
             },
         ]
     }
