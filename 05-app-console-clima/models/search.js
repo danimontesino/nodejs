@@ -60,8 +60,8 @@ class Search {
         // http
         try {
             const instance = axios.create({
-                baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`,
-                params: this.paramsOpenWeather
+                baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+                params: {...this.paramsOpenWeather, lat, lon}
             });
 
             const response = await instance.get();
