@@ -1,7 +1,8 @@
+require("dotenv").config()
 const express = require('express')
 const app = express()
-const hbs = require('hbs');
-const port = 8080;
+const hbs = require('hbs')
+const port = process.env.PORT;
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials');
