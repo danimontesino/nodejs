@@ -5,9 +5,43 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Access denied</title>
+    <title>Google SignIn</title>
+    <meta name="google-signin-client_id" content="335525484787-sjbcv48p0ah1h2ov4vf69i8atat6po2g.apps.googleusercontent.com">
 </head>
 <body>
-    <h1>Access denied</h1>
+    <h1>Google SignIn</h1>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        const url = ( window.location.hostname.includes('localhost') ) ? 'http://localhost:8080/api/auth/google' : 'production_url';
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            const id_token = googleUser.getAuthResponse().id_token;
+            const data = {id_token};
+            fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( resp => resp.json())
+            .then(data => console.log('Server', data))
+            .catch(console.log)
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
 </body>
 </html>
