@@ -21,7 +21,7 @@ const userGet = async (req = request, res = response) => {
 
 const userUpdate = async (req, res) => {
     const id = req.params.id
-    const {_id, password, google, email,...reqUser} = req.body
+    const {_id, password, google, email, state,...reqUser} = req.body
 
     if (password) {
         const salt = bcryptjs.genSaltSync()
