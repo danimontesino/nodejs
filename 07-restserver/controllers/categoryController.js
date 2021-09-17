@@ -68,7 +68,7 @@ const categoryCreate = async (req = request, res = response) => {
     } catch (err) {
         console.log(err)
         res.status(500).json( {
-            msg: "Error saving, consult administrator"
+            msg: "Error saving category, consult administrator"
         })
     }
 }
